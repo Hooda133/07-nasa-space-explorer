@@ -669,3 +669,19 @@ body::before{
   .gallery-card .image-frame img,
   .status-retry{transition:none!important;transform:none!important}
 }
+
+
+/* Clear visual explanation when a NASA image preview cannot be loaded. */
+.fallback-icon{display:flex;flex-direction:column;gap:16px;justify-content:center;align-items:center;text-align:center;padding:22px}
+.fallback-caption{
+  font:600 10px/1.5 "DM Mono",monospace;
+  text-transform:uppercase;
+  letter-spacing:.11em;
+  color:#d7e9ff;
+  text-shadow:0 2px 12px rgba(0,16,44,.65);
+}
+.modal-media .fallback-icon{max-width:100%;min-height:235px}
+@media(max-width:560px){
+  .fallback-icon .fallback-svg{width:54px;height:54px}
+  .fallback-caption{font-size:9px}
+}
