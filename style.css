@@ -292,3 +292,52 @@ h1,h2,h3,.brand-name{font-family:"Inter","Public Sans",sans-serif}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
 }
+
+
+/* SPACE EXPLORER INSTRUMENT ICON SYSTEM
+   Sharp, consistent 1.5px line-art replaces generic sparkle/emoji glyphs. */
+.icon-sprite{position:absolute;width:0;height:0;overflow:hidden;pointer-events:none}
+.ui-icon{display:inline-block;width:20px;height:20px;flex:none;vertical-align:middle;color:inherit;overflow:visible}
+.ui-icon.icon-inline{width:15px;height:15px;vertical-align:-.18em;margin-left:4px}
+.header-nav .header-link{display:inline-flex;align-items:center;gap:4px}
+.header-nav .ui-icon{width:15px;height:15px;transition:transform .2s}
+.header-nav .header-link:hover .ui-icon{transform:translate(2px,-2px)}
+.hero-actions a .ui-icon{width:18px;height:18px;transition:transform .25s}
+.hero-actions a:hover .ui-icon{transform:translate(2px,-2px)}
+.hero-secondary .ui-icon{color:#b3d8ff}
+.field label .ui-icon{margin:0 4px 0 1px;color:#9db7da}
+.range-connector .ui-icon{width:19px;height:19px;color:#91b7e8}
+.button-arrow .ui-icon{width:22px;height:22px;color:#fff;transition:transform .3s}
+.search-button:hover .button-arrow .ui-icon{transform:translate(3px,-3px)}
+.fact-icon{min-width:127px;justify-content:center;gap:10px;background:radial-gradient(ellipse at 50% 30%,rgba(65,139,255,.16),rgba(18,42,81,.08));}
+.fact-icon .fact-planet{width:42px;height:42px;color:#9bd8ff;filter:drop-shadow(0 0 9px rgba(87,158,255,.36))}
+.fact-icon small{text-align:center}
+.another-fact{display:inline-flex;align-items:center;gap:6px}
+.another-fact .ui-icon{width:16px;height:16px;color:#90c9ff;transition:transform .4s ease}
+.another-fact:hover .ui-icon{transform:rotate(80deg)}
+.placeholder-orbit .placeholder-telescope{width:55px;height:55px;color:#abd9ff;filter:drop-shadow(0 0 11px rgba(67,142,249,.4))}
+.placeholder-orbit{background:radial-gradient(circle,#1c447e66,transparent 74%)}
+.placeholder-link .ui-icon{transition:transform .25s}
+.placeholder-link:hover .ui-icon{transform:translateY(-3px)}
+.accent{display:inline-flex;align-items:center;vertical-align:middle;margin:0 5px;color:#f36b57}
+.accent .ui-icon{width:18px;height:18px}
+.site-footer a .ui-icon{color:#a8d3ff;transition:transform .2s}
+.site-footer a:hover .ui-icon{transform:translate(2px,-2px)}
+.fallback-icon{display:grid;place-items:center;width:100%;height:100%;color:#a8d7ff;text-shadow:none}
+.fallback-icon .fallback-svg{width:70px;height:70px;stroke-width:1.15;filter:drop-shadow(0 0 24px #377ccc88)}
+.gallery-card:hover .fallback-svg{transform:scale(1.075);transition:transform .5s}
+.card-action .ui-icon{width:15px;height:15px;transition:transform .2s}
+.gallery-card:hover .card-action .ui-icon{transform:translate(2px,-2px)}
+.nav-photo{display:grid;place-items:center}
+.nav-photo .ui-icon{width:19px;height:19px}
+.nasa-link{display:inline-flex;align-items:center;gap:6px}
+.nasa-link .ui-icon{width:16px;height:16px}
+.modal-media .fallback-icon{padding:50px}
+@media (max-width:560px){
+  .fact-icon{min-width:0}
+  .fact-icon .fact-planet{width:25px;height:25px}
+  .another-fact{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .ui-icon,.fallback-svg{transform:none!important;transition:none!important}
+}

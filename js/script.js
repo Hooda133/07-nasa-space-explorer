@@ -116,6 +116,28 @@ function safeUrl(value) {
   }
 }
 
+// Create an accessible decorative outline icon from the SVG sprite in index.html.
+function makeIcon(name, className = "ui-icon") {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("class", className);
+  svg.setAttribute("aria-hidden", "true");
+  svg.setAttribute("focusable", "false");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+  use.setAttribute("href", "#icon-" + name);
+  svg.append(use);
+  return svg;
+}
+
+// Use visually meaningful artwork for non-image entries or broken images.
+function makeMediaFallback(item) {
+  const fallback = document.createElement("span");
+  fallback.className = "fallback-icon";
+  fallback.setAttribute("aria-hidden", "true");
+  fallback.append(makeIcon(item.media_type === "video" ? "video" : "image", "ui-icon fallback-svg"));
+  return fallback;
+}
+
 // The updated APOD API uses 'hdurl' for the featured picture.
 // 'url' now points to the NASA article, NOT directly to its image.
 function pictureUrl(item) {
@@ -175,19 +197,11 @@ function createMedia(item, fullSize = false) {
     image.loading = fullSize ? "eager" : "lazy";
     image.addEventListener("error", () => {
       image.remove();
-      const fallback = document.createElement("span");
-      fallback.className = "fallback-icon";
-      fallback.setAttribute("aria-hidden", "true");
-      fallback.textContent = "✦";
-      wrapper.append(fallback);
+      wrapper.append(makeMediaFallback(item));
     }, { once: true });
     wrapper.append(image);
   } else {
-    const fallback = document.createElement("span");
-    fallback.className = "fallback-icon";
-    fallback.setAttribute("aria-hidden", "true");
-    fallback.textContent = item.media_type === "video" ? "▶" : "✦";
-    wrapper.append(fallback);
+    wrapper.append(makeMediaFallback(item));
   }
 
   if (!fullSize) {
@@ -220,9 +234,12 @@ function openDetails(item) {
   document.getElementById("modalCredit").textContent = credit ? "Image credit: " + credit : "";
 
   modalLink.href = featureUrl(item);
-  modalLink.textContent = item.media_type === "image"
-    ? "View original NASA feature ↗"
-    : "Watch or view this feature on NASA ↗";
+  modalLink.replaceChildren(
+    document.createTextNode(item.media_type === "image"
+      ? "View original NASA feature"
+      : "Watch or view this feature on NASA"),
+    makeIcon("arrow-up-right")
+  );
   if (!modal.open) modal.showModal();
   modal.scrollTop = 0;
 }
@@ -290,7 +307,10 @@ function renderGallery() {
     title.textContent = plainText(item.title) || "Untitled discovery";
     const action = document.createElement("span");
     action.className = "card-action";
-    action.textContent = item.media_type === "image" ? "Explore photo ↗" : "View video details ↗";
+    action.append(
+      document.createTextNode(item.media_type === "image" ? "Explore photo" : "View video details"),
+      makeIcon("arrow-up-right")
+    );
     body.append(date, title, action);
     card.append(body);
     card.addEventListener("click", () => openDetails(item));
