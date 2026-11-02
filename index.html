@@ -91,6 +91,11 @@
              src="https://science.nasa.gov/wp-content/uploads/2023/09/web-first-images-release.png"
              alt="" fetchpriority="high" decoding="async">
       </div>
+      <div class="space3d-hero" aria-hidden="true">
+        <div class="space3d-hero-glow"></div>
+        <img src="img/space-3d-saturn.svg" alt="" width="440" height="400" decoding="async">
+        <span class="space3d-hero-label">ILLUSTRATED / RINGED WORLD</span>
+      </div>
       <div class="hero-noise" aria-hidden="true"></div>
       <div class="hero-content">
         <div class="hero-copy">
@@ -129,7 +134,7 @@
         <div class="field"><label for="startDate"><span class="field-step">01</span> <svg class="ui-icon icon-inline" aria-hidden="true" focusable="false"><use href="#icon-calendar"></use></svg> START DATE</label><input id="startDate" type="date" required></div>
         <div class="range-connector" aria-hidden="true"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#icon-arrow-right"></use></svg></div>
         <div class="field"><label for="endDate"><span class="field-step">02</span> <svg class="ui-icon icon-inline" aria-hidden="true" focusable="false"><use href="#icon-calendar"></use></svg> END DATE</label><input id="endDate" type="date" required></div>
-        <button id="searchButton" class="search-button" type="submit"><span>Launch discovery</span><span class="button-arrow" aria-hidden="true"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#icon-rocket"></use></svg></span></button>
+        <button id="searchButton" class="search-button" type="submit"><span>Launch discovery</span><span class="button-arrow button-arrow-3d" aria-hidden="true"><img class="space3d-rocket" src="img/space-3d-rocket.svg" alt="" width="340" height="410"></span></button>
       </form>
       <div class="quick-ranges" role="group" aria-label="Quick date searches">
         <span class="quick-label">9-DAY JOURNEYS</span>
@@ -148,7 +153,7 @@
     </section>
 
     <aside class="fact-panel" aria-labelledby="factTitle">
-      <div class="fact-icon" aria-hidden="true"><svg class="ui-icon fact-planet" aria-hidden="true" focusable="false"><use href="#icon-planet"></use></svg><small>SPACE FACT / 001</small></div>
+      <div class="fact-icon space3d-fact-icon" aria-hidden="true"><img src="img/space-3d-saturn.svg" alt="" width="440" height="400" loading="lazy" decoding="async"><small>SPACE FACT / 001</small></div>
       <div class="fact-copy"><p class="kicker">A LITTLE COSMIC KNOWLEDGE</p><h2 id="factTitle">Did you know?</h2><p id="factText">Discover a new space fact every visit.</p></div>
       <button id="anotherFact" class="another-fact" type="button" aria-label="Show another space fact">Another fact <svg class="ui-icon icon-inline" aria-hidden="true" focusable="false"><use href="#icon-refresh"></use></svg></button>
     </aside>
@@ -168,7 +173,7 @@
       </div>
       <div id="gallery" class="gallery" aria-live="polite" aria-busy="false">
         <div class="placeholder">
-          <div class="placeholder-orbit" aria-hidden="true"><svg class="ui-icon placeholder-telescope" aria-hidden="true" focusable="false"><use href="#icon-telescope"></use></svg></div>
+          <div class="placeholder-orbit space3d-placeholder" aria-hidden="true"><img src="img/space-3d-telescope.svg" alt="" width="430" height="390" decoding="async"></div>
           <p class="kicker">YOUR JOURNEY STARTS HERE</p>
           <h3>The cosmos is calling.</h3>
           <p>Choose a nine-day window and launch your exploration of the universe.</p>

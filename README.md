@@ -4,6 +4,8 @@ An interactive, responsive gallery for NASA's Astronomy Picture of the Day (APOD
 
 ## What it does
 
+**New 3D-style space illustrations:** Three original, self-contained vector assets in `img/` add a floating ringed planet to the hero, a metallic launch rocket on the search button, and a shaded professional telescope to the gallery's initial state. A small ringed planet also appears in the fact panel. These illustrations use SVG gradients, shadows, and layered paths, rather than emoji or external icons, and are responsive with reduced-motion support. No additional articles or image gallery cards were added.
+
 **Space-specific iconography:** Replaces generic sparkle/star/emoji graphics and text arrows with a coherent custom SVG sprite (orbital diagrams, telescope, ringed planet, launch rocket, photo, video, calendar and navigation). Icons are decorative and screen-reader-hidden; all actual controls retain accessible labels. SVG symbols are included directly in `index.html` without a package or external icon library.
 
 **Visual design (cinematic refresh):** Webb's Carina Nebula hero image, floating mission panel, editorial bento gallery with larger photos, responsive layouts, modern NASA-aligned fonts, luminous controls, and an immersive photo-details dialog. All key UI functionality remains in HTML/CSS and vanilla JavaScript.
