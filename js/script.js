@@ -207,8 +207,9 @@ searchForm.addEventListener("submit", async (event) => {
   }
 
   const params = new URLSearchParams({
-    start_date: startDate,
-    end_date: endDate,
+    // WordPress APOD uses YYMMDD date_from/date_to instead of the legacy keys.
+    date_from: startDate.replaceAll("-", "").slice(2),
+    date_to: endDate.replaceAll("-", "").slice(2),
     api_key: document.getElementById("apiKey").value.trim() || "DEMO_KEY"
   });
   searchButton.disabled = true;
