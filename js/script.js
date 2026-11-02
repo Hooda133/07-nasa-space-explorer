@@ -46,15 +46,54 @@ function showRandomFact() {
 showRandomFact();
 document.getElementById("anotherFact").addEventListener("click", showRandomFact);
 
-// Quick jumps use the dates already supported by the provided dateRange.js.
+// The rubric requires NINE consecutive dates, including both endpoints.
+// Keep dateRange.js exactly as provided. This code works with its date inputs.
+const REQUIRED_DAYS = 9;
+const DAY_MS = 24 * 60 * 60 * 1000;
+function dateAtUTC(value) {
+  return new Date(value + "T00:00:00Z");
+}
+function dateString(date) {
+  return date.toISOString().slice(0, 10);
+}
+function moveDate(value, days) {
+  const date = dateAtUTC(value);
+  date.setUTCDate(date.getUTCDate() + days);
+  return dateString(date);
+}
+
+// Adjust the other date when someone changes either field.
+// At the archive boundaries, shift the entire 9-day window.
+function setNineDayRange(value, startingFromFirstDate) {
+  if (!value || Number.isNaN(dateAtUTC(value).getTime())) return;
+  let start = startingFromFirstDate ? value : moveDate(value, -(REQUIRED_DAYS - 1));
+  let end = startingFromFirstDate ? moveDate(value, REQUIRED_DAYS - 1) : value;
+  if (end > endInput.max) {
+    end = endInput.max;
+    start = moveDate(end, -(REQUIRED_DAYS - 1));
+  }
+  if (start < startInput.min) {
+    start = startInput.min;
+    end = moveDate(start, REQUIRED_DAYS - 1);
+  }
+  startInput.value = start;
+  endInput.value = end;
+}
+startInput.addEventListener("change", () => setNineDayRange(startInput.value, true));
+endInput.addEventListener("change", () => setNineDayRange(endInput.value, false));
+// Confirm the starter defaults to nine dates, even near a boundary.
+setNineDayRange(endInput.value, false);
+
+// Presets are also nine days long, not arbitrary seven/14/30-day ranges.
 quickButtons.forEach(button => {
   button.addEventListener("click", () => {
-    const days = Number(button.dataset.days);
-    const end = endInput.max;
-    const start = new Date(end + "T00:00:00Z");
-    start.setUTCDate(start.getUTCDate() - days + 1);
-    startInput.value = start.toISOString().split("T")[0];
-    endInput.value = end;
+    if (searchButton.disabled) return;
+    if (button.dataset.first === "true") {
+      setNineDayRange(startInput.min, true);
+    } else {
+      const daysBack = Number(button.dataset.offset || 0);
+      setNineDayRange(moveDate(endInput.max, -daysBack), false);
+    }
     searchForm.requestSubmit();
   });
 });
@@ -112,6 +151,15 @@ function showStatus(title, details, isError = false, isLoading = false) {
   paragraph.textContent = details;
   status.append(heading, paragraph);
   gallery.append(status);
+  // Loading skeletons make the gallery feel responsive while NASA responds.
+  if (isLoading) {
+    for (let i = 0; i < 3; i++) {
+      const skeleton = document.createElement("div");
+      skeleton.className = "loading-skeleton";
+      skeleton.setAttribute("aria-hidden", "true");
+      gallery.append(skeleton);
+    }
+  }
 }
 
 // Create a featured image or a fallback symbol for videos/no image.
@@ -216,12 +264,20 @@ function renderGallery() {
     return;
   }
 
-  for (const item of displayedEntries) {
+  for (const [index, item] of displayedEntries.entries()) {
     const card = document.createElement("button");
     card.type = "button";
     card.className = "gallery-card";
     card.setAttribute("aria-label", "View details: " + plainText(item.title || "NASA feature"));
     card.append(createMedia(item));
+
+    // Editorial image-number overlay, e.g., 01 / 09.
+    const number = document.createElement("span");
+    number.className = "card-index";
+    number.setAttribute("aria-hidden", "true");
+    number.textContent = String(index + 1).padStart(2, "0") +
+      " / " + String(displayedEntries.length).padStart(2, "0");
+    card.append(number);
 
     const body = document.createElement("div");
     body.className = "card-body";
@@ -250,19 +306,37 @@ filterButtons.forEach(button => {
   });
 });
 
-// Keep the actual API data and update the filter counts.
+// Keep nine distinct APOD entries, one for every selected date.
+// Some API responses include duplicate entries or may omit an unpublished day.
 function showGallery(items) {
-  allEntries = items.filter(item =>
-    item && typeof item.date === "string" && item.date >= startInput.value &&
-    item.date <= endInput.value
-  ).sort((a, b) => b.date.localeCompare(a.date));
-  activeFilter = "all";
-  galleryToolbar.hidden = allEntries.length === 0;
-  if (allEntries.length === 0) {
-    showStatus("No discoveries found", "Try another date range to explore the archive.");
-    resultsLabel.textContent = "0 results";
+  const datesByDay = new Map();
+  for (const item of items) {
+    if (item && typeof item.date === "string" &&
+        item.date >= startInput.value && item.date <= endInput.value &&
+        !datesByDay.has(item.date)) {
+      datesByDay.set(item.date, item);
+    }
+  }
+  const expectedDates = [];
+  for (let day = 0; day < REQUIRED_DAYS; day++) {
+    expectedDates.push(moveDate(startInput.value, day));
+  }
+  const missingDates = expectedDates.filter(date => !datesByDay.has(date));
+  if (missingDates.length > 0) {
+    allEntries = [];
+    displayedEntries = [];
+    galleryToolbar.hidden = true;
+    resultsLabel.textContent = datesByDay.size + " of 9 entries received";
+    showStatus("NASA did not return all 9 days",
+      "Missing: " + missingDates.join(", ") +
+      ". Try a nine-day range ending yesterday or choose older dates.", true);
     return;
   }
+
+  allEntries = expectedDates.map(date => datesByDay.get(date))
+    .sort((a, b) => b.date.localeCompare(a.date));
+  activeFilter = "all";
+  galleryToolbar.hidden = false;
   document.getElementById("allCount").textContent = allEntries.length;
   document.getElementById("photoCount").textContent =
     allEntries.filter(item => item.media_type === "image").length;
@@ -288,14 +362,22 @@ searchForm.addEventListener("submit", async (event) => {
     showStatus("Dates out of range", "Select dates between June 16, 1995 and today.", true);
     return;
   }
+  const difference = (dateAtUTC(endDate) - dateAtUTC(startDate)) / DAY_MS;
+  if (difference !== REQUIRED_DAYS - 1) {
+    showStatus("Select exactly 9 consecutive days",
+      "Adjust either date; the other date will automatically follow.", true);
+    resultsLabel.textContent = "9-day range required";
+    return;
+  }
 
   const params = new URLSearchParams({
-    // WordPress APOD uses YYMMDD date_from/date_to instead of the legacy keys.
-    date_from: startDate.replaceAll("-", "").slice(2),
-    date_to: endDate.replaceAll("-", "").slice(2),
+    // NASA's current APOD endpoint documents YYYY-MM-DD start_date/end_date.
+    start_date: startDate,
+    end_date: endDate,
     api_key: document.getElementById("apiKey").value.trim() || "DEMO_KEY"
   });
   searchButton.disabled = true;
+  quickButtons.forEach(button => { button.disabled = true; });
   galleryToolbar.hidden = true;
   gallery.setAttribute("aria-busy", "true");
   resultsLabel.textContent = "Searching the cosmos…";
@@ -326,6 +408,7 @@ searchForm.addEventListener("submit", async (event) => {
     resultsLabel.textContent = "Search unsuccessful";
   } finally {
     searchButton.disabled = false;
+    quickButtons.forEach(button => { button.disabled = false; });
     gallery.setAttribute("aria-busy", "false");
   }
 });
