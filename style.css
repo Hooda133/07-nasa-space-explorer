@@ -3,10 +3,10 @@
    Professional contrast, semantic controls and reduced-motion support. */
 
 :root{
-  --bg:#030711;--navy:#070f21;--surface:#0b1428;--surface-2:#101d36;
-  --text:#f9fbff;--muted:#afbdd3;--subtle:#8193ad;
-  --accent:#75baff;--blue:#1477ff;--red:#f3463f;
-  --border:rgba(196,220,255,.15);
+  --bg:#101e36;--navy:#172947;--surface:#203758;--surface-2:#294469;
+  --text:#f9fbff;--muted:#d0ddee;--subtle:#aec3df;
+  --accent:#a4d4ff;--blue:#3c88ff;--red:#f3463f;
+  --border:rgba(209,228,255,.28);
   --radius:22px;--ease:cubic-bezier(.22,1,.36,1);
 }
 *{box-sizing:border-box}
@@ -346,18 +346,6 @@ h1,h2,h3,.brand-name{font-family:"Inter","Public Sans",sans-serif}
 /* LIGHTER MIDNIGHT-BLUE THEME
    Brighter deep-blue canvas and glass-like panels without losing cinematic
    NASA imagery, white-text contrast, responsive layouts, or the new SVG icons. */
-:root{
-  --bg:#101e36;
-  --navy:#172947;
-  --surface:#203758;
-  --surface-2:#294469;
-  --text:#f9fbff;
-  --muted:#d0ddee;
-  --subtle:#aec3df;
-  --accent:#a4d4ff;
-  --blue:#3c88ff;
-  --border:rgba(209,228,255,.28);
-}
 body{
   background:#101e36;
   background:linear-gradient(150deg,#182e4f 0%,#11233f 41%,#0e1c35 100%);
@@ -589,4 +577,95 @@ body::before{
 @media(prefers-reduced-motion:reduce){
   .space3d-hero{animation:none!important;transform:none!important}
   .search-button .space3d-rocket,.space3d-placeholder img{transition:none!important}
+}
+
+
+/* Final responsive and interaction audit: avoid competing imagery and clarify
+   recoverable archive errors without altering the nine-day assignment. */
+.status-retry{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:43px;
+  margin-top:18px;
+  padding:11px 18px;
+  border-radius:10px;
+  border:1px solid rgba(199,224,255,.52);
+  background:linear-gradient(135deg,#d5edff,#f5faff);
+  color:#112b4c;
+  box-shadow:0 8px 24px rgba(0,20,60,.19);
+  font-size:13px;
+  font-weight:750;
+  cursor:pointer;
+  transition:transform .2s ease,box-shadow .2s ease,background .2s ease;
+}
+.status-retry:hover{
+  transform:translateY(-2px);
+  box-shadow:0 13px 30px rgba(0,17,50,.28);
+}
+.status-retry:active{transform:translateY(0)}
+.status-retry:focus-visible{outline:3px solid #bdeaff;outline-offset:4px}
+.status-message p{overflow-wrap:anywhere}
+.gallery-card .image-frame img{
+  background:radial-gradient(circle at 45% 25%,#52729c,#1b3151 72%);
+  backface-visibility:hidden;
+  will-change:auto;
+}
+.gallery-card:hover .image-frame img{will-change:transform}
+.hero-image{backface-visibility:hidden}
+.space3d-hero{
+  filter:drop-shadow(0 16px 21px rgba(0,11,35,.22));
+}
+.space3d-hero img{
+  max-height:330px;
+}
+.space3d-fact-icon{
+  flex-shrink:0;
+}
+.space3d-fact-icon img{
+  max-width:100%;
+}
+.search-button .space3d-rocket{
+  transform-origin:50% 55%;
+}
+@media(max-width:800px){
+  .hero-copy{max-width:min(100%,610px)}
+  .photo-modal{max-height:calc(100dvh - 24px);overflow-y:auto}
+  .modal-content{overflow:visible}
+  .fact-copy{flex:1 1 195px;min-width:0}
+  .gallery-card .image-frame img{object-position:center}
+  .space3d-hero{z-index:0;filter:none}
+  .hero-content{z-index:2}
+}
+@media(max-width:560px){
+  .header-nav .header-link{white-space:nowrap}
+  .hero-actions a{min-width:0}
+  .hero-metrics{flex-wrap:wrap;row-gap:12px}
+  .search-panel{position:relative;z-index:2}
+  .field input{width:100%}
+  .fact-panel{align-items:center}
+  .space3d-fact-icon{flex:0 0 115px}
+  .fact-copy{flex:1 1 165px}
+  .gallery-card .card-date{font-size:10px}
+  .photo-modal{width:calc(100vw - 16px);max-height:calc(100dvh - 16px);margin:auto}
+  .photo-modal::backdrop{backdrop-filter:blur(7px)}
+  .modal-media{min-height:190px;max-height:35dvh}
+  .modal-media img,.modal-picture img{max-height:35dvh}
+  .modal-content{padding:22px}
+  .modal-navigation{margin-bottom:17px}
+  .modal-buttons .nav-photo{min-height:43px;min-width:43px}
+}
+@media(max-width:440px){
+  .space3d-hero{display:none}
+  .hero h1{font-size:clamp(46px,12.6vw,56px)}
+  .hero-copy{padding-top:25px}
+  .hero-description{margin:19px 0 25px}
+  .hero-bottom{margin-top:26px}
+  .site-header .header-link{display:none}
+  .space3d-fact-icon{flex:0 0 105px}
+  .fact-copy{flex:1 1 145px}
+}
+@media(prefers-reduced-motion:reduce){
+  .gallery-card .image-frame img,
+  .status-retry{transition:none!important;transform:none!important}
 }
