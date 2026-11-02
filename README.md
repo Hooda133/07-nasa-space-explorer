@@ -4,15 +4,15 @@ An interactive, responsive gallery for NASA's Astronomy Picture of the Day (APOD
 
 ## What it does
 
-- Fetches real NASA APOD entries for your selected **start date and end date**.
+- Fetches real NASA APOD entries for **exactly 9 consecutive dates** between the selected start and end, using a valid `DEMO_KEY` or your own NASA API key.
 - Displays image cards with title and date.
 - Opens an accessible, closable modal with the larger picture and NASA's full explanation.
 - Provides links to NASA's original feature for videos and other non-image entries.
 - Shows a loading state, helpful errors, and a no-results message.
 - Picks a random **Did You Know?** space fact on every page refresh.
 - Adds a smooth **hover zoom** effect for gallery photos.
-- Uses a NASA-inspired color palette and responsive design for desktop and mobile.
-- Includes one-click **Last 7 days**, **Last 14 days**, and **Last 30 days** search shortcuts.
+- Uses a NASA-inspired color palette and responsive design for desktop and mobile, including the agency's current Inter, Public Sans, and DM Mono font families.
+- Includes one-click **Latest 9 days**, **9 days ending yesterday**, and **First 9 days** search shortcuts.
 - Provides **All / Photos / Videos** gallery filters without extra API requests.
 - Supports next/previous discovery buttons and left/right arrow keys inside the modal.
 - Lets visitors request another random space fact without reloading.
@@ -29,15 +29,15 @@ An interactive, responsive gallery for NASA's Astronomy Picture of the Day (APOD
 
 ## Quick test checklist
 
-- Select a short historical range and confirm that each card belongs to the selected dates.
+- Select nine consecutive historical dates and confirm the gallery displays **exactly nine cards** (including video entries). Both date inputs stay synchronized automatically.
 - Confirm a photo card opens a larger image with its title, date, and NASA explanation.
 - Try a date range including a video: **Videos** should show a card linking to the NASA feature.
-- Test loading, empty results, an invalid date range, and network errors.
+- Test loading, a nine-day window with missing APOD entries, an invalid date range, and network errors.
 - Try the mobile layout and keyboard controls.
 
 The HTML/CSS and client-side behavior have been tested with mocked NASA responses. **A live browser request to NASA must still be checked in your Codespaces preview before submission.**
 
-The default date range is populated by the provided `js/dateRange.js` file, which remains unchanged. All custom JavaScript is in `js/script.js`.
+The default date range is populated by the provided `js/dateRange.js` file, which remains unchanged. All custom JavaScript is in `js/script.js`. Additional code keeps the start and end dates exactly eight days apart and validates that one unique NASA result exists for each of the nine days. If NASA has not yet published one of the entries, the app names the missing date instead of inventing a result.
 
 ## NASA API
 
