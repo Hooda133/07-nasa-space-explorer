@@ -199,13 +199,6 @@ searchForm.addEventListener("submit", async (event) => {
     return;
   }
 
-  // Avoid overwhelming the API/browser with very large ranges.
-  const days = (Date.parse(endDate) - Date.parse(startDate)) / 86400000 + 1;
-  if (days > 31) {
-    showStatus("Choose a shorter trip", "Please select up to 31 days at a time.", true);
-    return;
-  }
-
   const params = new URLSearchParams({
     // WordPress APOD uses YYMMDD date_from/date_to instead of the legacy keys.
     date_from: startDate.replaceAll("-", "").slice(2),
