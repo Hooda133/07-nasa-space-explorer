@@ -134,3 +134,11 @@ button, input { font: inherit; } a { color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   .gallery-card, .moon { animation: none !important; }
 }
+
+
+/* NASA's digital typography uses Inter, Public Sans, and DM Mono. */
+body { font-family: "Public Sans", "Segoe UI", Arial, sans-serif; }
+h1, h2, h3, .brand-name, .card-title { font-family: "Inter", Arial, sans-serif; }
+.eyebrow, .kicker, .quick-label, .issue-no, .card-date, .modal-position,
+.range-label, .results-count { font-family: "DM Mono", Consolas, monospace; }
+.quick-button:disabled { opacity: .5; cursor: wait; transform: none; }
