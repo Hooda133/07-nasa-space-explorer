@@ -4,6 +4,9 @@ An interactive, responsive gallery for NASA's Astronomy Picture of the Day (APOD
 
 ## What it does
 
+**Visual design (cinematic refresh):** Webb's Carina Nebula hero image, floating mission panel, editorial bento gallery with larger photos, responsive layouts, modern NASA-aligned fonts, luminous controls, and an immersive photo-details dialog. All key UI functionality remains in HTML/CSS and vanilla JavaScript.
+
+
 - Fetches real NASA APOD entries for **exactly 9 consecutive dates** between the selected start and end, using a valid `DEMO_KEY` or your own NASA API key.
 - Displays image cards with title and date.
 - Opens an accessible, closable modal with the larger picture and NASA's full explanation.
@@ -49,11 +52,13 @@ This project uses:
 https://science.nasa.gov/wp-json/wp/v2/apod-basic/
 ```
 
-For a date range, the direct WordPress endpoint uses `date_from` and `date_to` in `YYMMDD` format. The app automatically builds those parameters from the selected dates. Unlike the old endpoint, the returned `url` is the NASA article page; the image is in `hdurl` when available.
+For a date range, NASA's current APOD endpoint documents `start_date` and `end_date` in `YYYY-MM-DD` format. The app constructs those parameters from the synchronized nine-day date pickers. Unlike the old endpoint, the returned `url` is the NASA article page; the image is in `hdurl` when available.
 
 The app starts with `DEMO_KEY`. To use your own key, open **NASA API key settings** on the page. The key is not saved in the code or browser storage. NASA API information: https://api.nasa.gov/
 
 ## Credits and usage
+
+The hero image is NASA Webb's Carina Nebula from `https://science.nasa.gov/image-detail/web-first-images-release/` (credit: NASA, ESA, CSA, STScI). It is not an APOD gallery result; the nine gallery items are still loaded live from APOD.
 
 This is an **unofficial educational project** using NASA APOD data and NASA-provided starter assets, not a NASA website or an endorsement. NASA retains its own brand and imagery usage rules. Additional images in APOD may carry creator credits; the gallery modal displays the credit when supplied.
 
