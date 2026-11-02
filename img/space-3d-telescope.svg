@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 390" role="img" aria-labelledby="title desc">
+  <title id="title">Three-dimensional telescope illustration</title>
+  <desc id="desc">A sophisticated metallic telescope with a luminous blue lens, gold trim, and an adjustable tripod.</desc>
+  <defs>
+    <linearGradient id="tube" x1="0" y1="0" x2=".1" y2="1">
+      <stop stop-color="#f9fcff"/><stop offset=".17" stop-color="#b1d2ec"/><stop offset=".39" stop-color="#5f7eaa"/><stop offset=".62" stop-color="#243b74"/><stop offset=".86" stop-color="#93b6df"/><stop offset="1" stop-color="#324672"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#fff4d1"/><stop offset=".36" stop-color="#f7be68"/><stop offset=".72" stop-color="#aa6c69"/><stop offset="1" stop-color="#603e70"/>
+    </linearGradient>
+    <radialGradient id="lens" cx=".38" cy=".35" r=".77">
+      <stop stop-color="#edfaff"/><stop offset=".16" stop-color="#b2f3ff"/><stop offset=".49" stop-color="#3ca7dc"/><stop offset=".8" stop-color="#244a9e"/><stop offset="1" stop-color="#0b1a58"/>
+    </radialGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#344d7d"/><stop offset=".32" stop-color="#e1f3ff"/><stop offset=".64" stop-color="#789cc7"/><stop offset="1" stop-color="#1e3260"/>
+    </linearGradient>
+    <linearGradient id="leg" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#1e3365"/><stop offset=".27" stop-color="#9ac3e7"/><stop offset=".58" stop-color="#d6e9f6"/><stop offset="1" stop-color="#304b7d"/>
+    </linearGradient>
+    <radialGradient id="glow"><stop stop-color="#7cc4ff" stop-opacity=".22"/><stop offset="1" stop-color="#7cc4ff" stop-opacity="0"/></radialGradient>
+    <filter id="shadow"><feGaussianBlur stdDeviation="10"/></filter>
+  </defs>
+  <circle cx="216" cy="178" r="171" fill="url(#glow)"/>
+  <ellipse cx="214" cy="347" rx="135" ry="16" fill="#0a1b3f" opacity=".47" filter="url(#shadow)"/>
+  <!-- Three-dimensional tripod legs -->
+  <path d="M201 224L144 340" stroke="#17284f" stroke-width="26" stroke-linecap="round"/>
+  <path d="M201 224L144 340" stroke="url(#leg)" stroke-width="18" stroke-linecap="round"/>
+  <path d="M207 224L290 338" stroke="#17284f" stroke-width="26" stroke-linecap="round"/>
+  <path d="M207 224L290 338" stroke="url(#leg)" stroke-width="18" stroke-linecap="round"/>
+  <path d="M204 231L207 349" stroke="#17284f" stroke-width="24" stroke-linecap="round"/>
+  <path d="M204 231L207 349" stroke="url(#leg)" stroke-width="15" stroke-linecap="round"/>
+  <path d="M128 345L156 345M193 353H222M278 345H303" stroke="#e1edff" stroke-width="7" stroke-linecap="round" opacity=".81"/>
+  <path d="M153 327L135 345M280 327L297 345" stroke="#a2c9eb" stroke-width="4" stroke-linecap="round"/>
+  <!-- Mount & cylindrical tilt joint -->
+  <ellipse cx="202" cy="228" rx="45" ry="25" fill="#0f2a56" opacity=".75"/>
+  <rect x="178" y="188" width="50" height="57" rx="16" fill="url(#metal)" stroke="#c6e2f7" stroke-opacity=".4" stroke-width="2"/>
+  <ellipse cx="203" cy="207" rx="38" ry="33" fill="url(#metal)" stroke="#f8f0db" stroke-opacity=".55" stroke-width="3"/>
+  <ellipse cx="203" cy="207" rx="24" ry="20" fill="#264e82" stroke="#a9dafa" stroke-width="6"/>
+  <circle cx="203" cy="207" r="9" fill="url(#rim)"/>
+  <!-- Optical barrel aimed into space -->
+  <g transform="rotate(-32 215 143)">
+    <rect x="112" y="100" width="206" height="94" rx="18" fill="#172d58" opacity=".54"/>
+    <rect x="105" y="97" width="206" height="94" rx="17" fill="url(#tube)" stroke="#e6f5ff" stroke-opacity=".5" stroke-width="2"/>
+    <rect x="118" y="97" width="16" height="94" rx="5" fill="url(#rim)" stroke="#fff1ca" stroke-opacity=".4"/>
+    <rect x="181" y="97" width="14" height="94" rx="4" fill="url(#rim)" opacity=".9"/>
+    <rect x="286" y="94" width="33" height="101" rx="12" fill="url(#rim)" stroke="#ffedd0" stroke-opacity=".6" stroke-width="2"/>
+    <ellipse cx="318" cy="145" rx="26" ry="49" fill="#172e59" stroke="#e9c99d" stroke-width="8"/>
+    <ellipse cx="323" cy="145" rx="21" ry="41" fill="url(#lens)" stroke="#d5f4ff" stroke-width="3"/>
+    <ellipse cx="319" cy="131" rx="9" ry="15" fill="#fff" opacity=".3" transform="rotate(-24 319 131)"/>
+    <path d="M114 114H288" stroke="#fff" stroke-opacity=".25" stroke-width="6" stroke-linecap="round"/>
+    <path d="M132 173H289" stroke="#101e50" stroke-opacity=".44" stroke-width="9" stroke-linecap="round"/>
+    <rect x="99" y="117" width="13" height="56" rx="3" fill="#183565"/>
+    <path d="M203 192L218 209" stroke="#7b9dc7" stroke-width="11" stroke-linecap="round"/>
+    <rect x="146" y="73" width="65" height="15" rx="7.5" fill="url(#metal)" stroke="#f4f7fa" stroke-opacity=".55"/>
+    <path d="M173 88V99" stroke="#8aaad2" stroke-width="10"/>
+  </g>
+  <circle cx="75" cy="89" r="3" fill="#c1ecff"/>
+  <circle cx="347" cy="74" r="3.5" fill="#fff2ce"/>
+  <circle cx="351" cy="280" r="2" fill="#c9e5ff" opacity=".75"/>
+</svg>
