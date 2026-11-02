@@ -466,3 +466,106 @@ body::before{
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
+
+
+/* Bring back the original starter telescope 🔭, with a refined presentation. */
+.hero-telescope-emblem{
+  position:absolute;
+  z-index:1;
+  top:19%;
+  right:8%;
+  width:clamp(148px,15vw,214px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:19px;
+  pointer-events:none;
+  filter:drop-shadow(0 22px 28px rgba(0,9,34,.28));
+  animation:telescope-arrive 1s cubic-bezier(.22,1,.36,1) .35s both;
+}
+.hero-telescope-ring{
+  position:relative;
+  width:100%;
+  aspect-ratio:1;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:radial-gradient(circle at 37% 30%,rgba(218,238,255,.27),rgba(50,99,166,.19) 47%,rgba(12,27,57,.53) 76%);
+  border:1px solid rgba(209,236,255,.58);
+  box-shadow:
+    inset 0 0 35px rgba(133,187,255,.17),
+    0 0 0 11px rgba(151,198,255,.055),
+    0 0 0 28px rgba(120,171,255,.035),
+    0 18px 42px rgba(0,13,42,.35);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+.hero-telescope-ring::before{
+  content:"";
+  position:absolute;
+  inset:12px;
+  border:1px dashed rgba(202,226,255,.38);
+  border-radius:50%;
+}
+.hero-telescope-ring::after{
+  content:"";
+  position:absolute;
+  top:-7px;right:27%;
+  height:11px;width:11px;
+  border-radius:50%;
+  background:#c7e8ff;
+  box-shadow:0 0 14px rgba(159,211,255,.9);
+}
+.original-telescope{
+  display:inline-block;
+  line-height:1;
+  font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;
+  font-variant-emoji:emoji;
+}
+.hero-telescope-ring .original-telescope{
+  font-size:clamp(77px,8.3vw,116px);
+  transform:rotate(-14deg);
+  filter:drop-shadow(0 11px 10px rgba(0,8,28,.35));
+}
+.hero-telescope-caption{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font:600 10px/1.3 "DM Mono",monospace;
+  letter-spacing:.2em;
+  color:#ecf6ff;
+  background:rgba(9,25,51,.66);
+  border:1px solid rgba(202,227,255,.28);
+  padding:9px 15px;
+  border-radius:100px;
+  backdrop-filter:blur(10px);
+}
+.placeholder-orbit .original-telescope{
+  font-size:64px;
+  transform:rotate(-14deg);
+  filter:drop-shadow(0 6px 12px rgba(0,23,68,.28));
+}
+@keyframes telescope-arrive{
+  from{opacity:0;transform:translateY(18px) scale(.94)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@media(max-width:1100px){
+  .hero-telescope-emblem{right:4%;top:25%;width:140px}
+  .hero-telescope-ring .original-telescope{font-size:76px}
+}
+@media(max-width:800px){
+  .hero-telescope-emblem{right:5%;top:16%;width:110px;gap:12px;opacity:.83}
+  .hero-telescope-ring .original-telescope{font-size:61px}
+  .hero-telescope-caption{font-size:8px;padding:8px 11px}
+}
+@media(max-width:560px){
+  .hero-telescope-emblem{right:24px;top:27px;width:71px;gap:7px;opacity:.76}
+  .hero-telescope-ring{box-shadow:inset 0 0 20px rgba(133,187,255,.17),0 0 0 7px rgba(151,198,255,.055)}
+  .hero-telescope-ring::before{inset:8px}
+  .hero-telescope-ring .original-telescope{font-size:40px}
+  .hero-telescope-caption{font-size:6px;letter-spacing:.1em;padding:6px 8px}
+  .placeholder-orbit .original-telescope{font-size:58px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-telescope-emblem{animation:none!important}
+}
