@@ -512,8 +512,7 @@ body::before{
   margin-top:-21px;
   white-space:nowrap;
 }
-.hero-content{z-index:2;pointer-events:none}
-.hero-content a{pointer-events:auto}
+.hero-content{z-index:2}
 @keyframes space3d-float{
   0%,100%{transform:translateY(0) rotate(-2deg)}
   50%{transform:translateY(-15px) rotate(1deg)}
