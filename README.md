@@ -35,6 +35,7 @@ An interactive, responsive gallery for NASA's Astronomy Picture of the Day (APOD
 ## Quick test checklist
 
 - Select nine consecutive historical dates and confirm the gallery displays **exactly nine cards** (including video entries). Both date inputs stay synchronized automatically.
+- Verify historical queries such as **June 16–24, 1995** or **January 1–9, 2000** use WordPress `date_from`/`date_to` and are not silently replaced with the latest nine days.
 - Confirm a photo card opens a larger image with its title, date, and NASA explanation.
 - Try a date range including a video: **Videos** should show a card linking to the NASA feature.
 - Test loading, a nine-day window with missing APOD entries, an invalid date range, and network errors.
@@ -54,7 +55,7 @@ This project uses:
 https://science.nasa.gov/wp-json/wp/v2/apod-basic/
 ```
 
-For a date range, NASA's current APOD endpoint documents `start_date` and `end_date` in `YYYY-MM-DD` format. The app constructs those parameters from the synchronized nine-day date pickers. Unlike the old endpoint, the returned `url` is the NASA article page; the image is in `hdurl` when available.
+**Important: the direct WordPress endpoint and NASA's older API gateway use different date-range parameters.** The WordPress endpoint in this project expects `date_from` and `date_to` in `YYMMDD` format (for example, June 16–24, 1995 becomes `date_from=950616&date_to=950624`). The older `/planetary/apod` gateway accepts `start_date` and `end_date` in `YYYY-MM-DD`, but its backend converts them to `date_from` / `date_to` before calling WordPress. The app now sends the WordPress parameters directly. Unlike the old endpoint, the returned `url` is the NASA article page; the image is in `hdurl` when available. Source: [NASA APOD API gateway source code](https://github.com/nasa/apod-api/blob/master/application.py).
 
 The app starts with `DEMO_KEY`. To use your own key, open **NASA API key settings** on the page. The key is not saved in the code or browser storage. NASA API information: https://api.nasa.gov/
 
