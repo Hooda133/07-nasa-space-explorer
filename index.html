@@ -49,6 +49,12 @@
         <div class="field"><label for="endDate">End date</label><input id="endDate" type="date" required></div>
         <button id="searchButton" class="search-button" type="submit">Get Space Images <span aria-hidden="true">→</span></button>
       </form>
+      <div class="quick-ranges" role="group" aria-label="Quick date searches">
+        <span class="quick-label">QUICK JUMPS</span>
+        <button class="quick-button" type="button" data-days="7">Last 7 days</button>
+        <button class="quick-button" type="button" data-days="14">Last 14 days</button>
+        <button class="quick-button" type="button" data-days="30">Last 30 days</button>
+      </div>
       <details class="api-settings">
         <summary>NASA API key settings (optional)</summary>
         <div class="key-content">
@@ -61,13 +67,22 @@
 
     <aside class="fact-panel" aria-labelledby="factTitle">
       <div class="fact-icon" aria-hidden="true">✦</div>
-      <div><p class="kicker">A LITTLE COSMIC KNOWLEDGE</p><h2 id="factTitle">Did you know?</h2><p id="factText">Discover a new space fact every visit.</p></div>
+      <div class="fact-copy"><p class="kicker">A LITTLE COSMIC KNOWLEDGE</p><h2 id="factTitle">Did you know?</h2><p id="factText">Discover a new space fact every visit.</p></div>
+      <button id="anotherFact" class="another-fact" type="button" aria-label="Show another space fact">Another fact ↻</button>
     </aside>
 
     <section class="discoveries" aria-labelledby="galleryTitle">
       <div class="gallery-heading">
         <div><p class="kicker">THE COSMIC COLLECTION</p><h2 id="galleryTitle">Your discoveries</h2></div>
         <p class="results-count" id="resultsLabel" aria-live="polite">Awaiting your first discovery</p>
+      </div>
+      <div class="gallery-toolbar" id="galleryToolbar" hidden>
+        <div class="filter-tabs" role="group" aria-label="Filter discoveries by media type">
+          <button type="button" class="filter-button is-active" data-filter="all" aria-pressed="true">All <span id="allCount">0</span></button>
+          <button type="button" class="filter-button" data-filter="image" aria-pressed="false">Photos <span id="photoCount">0</span></button>
+          <button type="button" class="filter-button" data-filter="video" aria-pressed="false">Videos <span id="videoCount">0</span></button>
+        </div>
+        <span id="rangeLabel" class="range-label"></span>
       </div>
       <div id="gallery" class="gallery" aria-live="polite" aria-busy="false">
         <div class="placeholder"><span class="placeholder-icon" aria-hidden="true">✺</span>
@@ -83,6 +98,13 @@
       <button type="button" class="close-modal" id="closeModal" aria-label="Close image details">×</button>
       <div class="modal-media" id="modalMedia"></div>
       <div class="modal-content">
+        <div class="modal-navigation">
+          <span id="modalPosition" class="modal-position">DISCOVERY 01 / 01</span>
+          <div class="modal-buttons">
+            <button id="previousPhoto" class="nav-photo" type="button" aria-label="Previous discovery">←</button>
+            <button id="nextPhoto" class="nav-photo" type="button" aria-label="Next discovery">→</button>
+          </div>
+        </div>
         <p class="kicker">NASA / ASTRONOMY PICTURE OF THE DAY</p>
         <h2 id="modalTitle"></h2>
         <time id="modalDate"></time>
