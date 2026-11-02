@@ -1,11 +1,45 @@
-# Project 7: NASA API - Space Explorer App
-NASA releases a new "Astronomy Picture of the Day" (APOD) every day—spotlighting breathtaking images of galaxies, stars, planets, and more.
+# Project 7: NASA Space Explorer
 
-Your task is to build an interactive web app that fetches and displays these photos using [NASA's API](https://api.nasa.gov/). Users will pick a date range and instantly view stunning photos from across the cosmos, along with titles and descriptions.
+An interactive, responsive gallery for NASA's Astronomy Picture of the Day (APOD).
 
-You'll get to use your skills to build something that's actually connected to real-world data from one of the most iconic organizations in the world.
+## What it does
 
-## Starter Files
-- The provided files include a NASA logo, date inputs, a button, a placeholder for your gallery, and basic layout and styling to help you get started.
-- It also includes built-in logic (in `dateRange.js`) to handle the valid APOD date range—from June 16, 1995 to today. No need to modify it.
-- All your custom JavaScript should go in `script.js`. That's where you'll write the code that fetches data and displays your gallery.
+- Fetches real NASA APOD entries for your selected **start date and end date**.
+- Displays image cards with title and date.
+- Opens an accessible, closable modal with the larger picture and NASA's full explanation.
+- Provides links to NASA's original feature for videos and other non-image entries.
+- Shows a loading state, helpful errors, and a no-results message.
+- Picks a random **Did You Know?** space fact on every page refresh.
+- Adds a smooth **hover zoom** effect for gallery photos.
+- Uses a NASA-inspired color palette and responsive design for desktop and mobile.
+
+## Run the project
+
+1. Open this repository in **VS Code**.
+2. Open `index.html` with a local preview extension such as Live Server or Live Preview.
+3. Select a date range and click **Get Space Images**.
+4. Click any card to open its details. Close the modal using **×**, **Escape**, or the background.
+
+The default date range is populated by the provided `js/dateRange.js` file, which remains unchanged. All custom JavaScript is in `js/script.js`.
+
+## NASA API
+
+NASA moved APOD to a new WordPress endpoint in September 2026. The former `api.nasa.gov/planetary/apod` endpoint is scheduled for retirement on **December 1, 2026**.
+
+This project uses:
+
+```text
+https://science.nasa.gov/wp-json/wp/v2/apod-basic/
+```
+
+For a date range, the direct WordPress endpoint uses `date_from` and `date_to` in `YYMMDD` format. The app automatically builds those parameters from the selected dates. Unlike the old endpoint, the returned `url` is the NASA article page; the image is in `hdurl` when available.
+
+The app starts with `DEMO_KEY`. To use your own key, open **NASA API key settings** on the page. The key is not saved in the code or browser storage. NASA API information: https://api.nasa.gov/
+
+## Credits and usage
+
+This is an **unofficial educational project** using NASA APOD data and NASA-provided starter assets, not a NASA website or an endorsement. NASA retains its own brand and imagery usage rules. Additional images in APOD may carry creator credits; the gallery modal displays the credit when supplied.
+
+- NASA APOD: https://apod.nasa.gov/apod/astropix.html
+- NASA brand guidance: https://www.nasa.gov/nasa-brand-center/brand-guidelines/
+- NASA media guidance: https://www.nasa.gov/nasa-brand-center/images-and-media/
