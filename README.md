@@ -4,6 +4,8 @@ An interactive, responsive gallery for NASA's Astronomy Picture of the Day (APOD
 
 ## What it does
 
+**Final quality and performance pass:** APOD gallery cards request ~960px versions of supported NASA dynamic images while modal images retain the full-resolution NASA URL. The search has a 20-second timeout, a retry button for recoverable failures, and clearer error messages for missing archive dates, blocked requests, or NASA server errors. The responsive CSS tightens hero artwork and modal layouts on small screens, and consolidates the theme's duplicate root color definitions. There is no new image article section and no external dependency.
+
 **New 3D-style space illustrations:** Three original, self-contained vector assets in `img/` add a floating ringed planet to the hero, a metallic launch rocket on the search button, and a shaded professional telescope to the gallery's initial state. A small ringed planet also appears in the fact panel. These illustrations use SVG gradients, shadows, and layered paths, rather than emoji or external icons, and are responsive with reduced-motion support. No additional articles or image gallery cards were added.
 
 **Space-specific iconography:** Replaces generic sparkle/star/emoji graphics and text arrows with a coherent custom SVG sprite (orbital diagrams, telescope, ringed planet, launch rocket, photo, video, calendar and navigation). Icons are decorative and screen-reader-hidden; all actual controls retain accessible labels. SVG symbols are included directly in `index.html` without a package or external icon library.
@@ -41,9 +43,12 @@ An interactive, responsive gallery for NASA's Astronomy Picture of the Day (APOD
 - Confirm a photo card opens a larger image with its title, date, and NASA explanation.
 - Try a date range including a video: **Videos** should show a card linking to the NASA feature.
 - Test loading, a nine-day window with missing APOD entries, an invalid date range, and network errors.
+- Check older nine-day windows (e.g., June 16–24, 1995, January 1–9, 2000) using the direct WordPress `date_from`/`date_to` parameters; verify the API returns the exact requested dates.
+- Verify that responsive cards use smaller NASA dynamic image sizes (when supported), while clicking opens the original full-resolution image; links and alt text should still work.
+- Temporarily block the NASA endpoint in browser developer tools and confirm the retry button and error notice appear; test a narrow phone viewport and reduced-motion mode.
 - Try the mobile layout and keyboard controls.
 
-The HTML/CSS and client-side behavior have been tested with mocked NASA responses. **A live browser request to NASA must still be checked in your Codespaces preview before submission.**
+The HTML/CSS and client-side behavior have been tested with mocked NASA responses and static checks. **Real NASA responses and the live website appearance must still be checked in Codespaces before submission.** An API record with no image uses a labeled illustration fallback and a link to the NASA article rather than inventing a photo.
 
 The default date range is populated by the provided `js/dateRange.js` file, which remains unchanged. All custom JavaScript is in `js/script.js`. Additional code keeps the start and end dates exactly eight days apart and validates that one unique NASA result exists for each of the nine days. If NASA has not yet published one of the entries, the app names the missing date instead of inventing a result.
 
