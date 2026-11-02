@@ -6,6 +6,8 @@ An interactive, responsive gallery for NASA's Astronomy Picture of the Day (APOD
 
 **Space-specific iconography:** Replaces generic sparkle/star/emoji graphics and text arrows with a coherent custom SVG sprite (orbital diagrams, telescope, ringed planet, launch rocket, photo, video, calendar and navigation). Icons are decorative and screen-reader-hidden; all actual controls retain accessible labels. SVG symbols are included directly in `index.html` without a package or external icon library.
 
+**Curated NASA Image Gallery (decoration):** A responsive three-image editorial section uses real NASA/partner imagery: a Webb Telescope artist's illustration, Webb's Pillars of Creation (NIRCam), and Cassini's view of Saturn's rings. Each image links to an official NASA detail page and displays the contributing organizations' image credits. This gallery is a *separate visual feature* and is **not** part of the nine real APOD records the assignment fetches.
+
 **Visual design (cinematic refresh):** Webb's Carina Nebula hero image, floating mission panel, editorial bento gallery with larger photos, responsive layouts, modern NASA-aligned fonts, luminous controls, and an immersive photo-details dialog. All key UI functionality remains in HTML/CSS and vanilla JavaScript.
 
 
@@ -57,6 +59,16 @@ https://science.nasa.gov/wp-json/wp/v2/apod-basic/
 For a date range, NASA's current APOD endpoint documents `start_date` and `end_date` in `YYYY-MM-DD` format. The app constructs those parameters from the synchronized nine-day date pickers. Unlike the old endpoint, the returned `url` is the NASA article page; the image is in `hdurl` when available.
 
 The app starts with `DEMO_KEY`. To use your own key, open **NASA API key settings** on the page. The key is not saved in the code or browser storage. NASA API information: https://api.nasa.gov/
+
+## Curated NASA image sources
+
+These are decorative editorial images; the nine-day APOD search remains live API-driven.
+
+- [James Webb telescope front view](https://science.nasa.gov/asset/webb/james-webb-space-telescope-front-view/) — illustration; NASA / ESA / CSA / Northrop Grumman
+- [Pillars of Creation (NIRCam)](https://science.nasa.gov/asset/webb/pillars-of-creation-nircam-image/) — NASA / ESA / CSA / STScI; processing: Joseph DePasquale, Anton Koekemoer, Alyssa Pagan (STScI)
+- [Saturn's Finale Ringscape](https://science.nasa.gov/resource/finale-ringscape/) — NASA / JPL-Caltech / Space Science Institute
+
+Images are loaded from official NASA science asset URLs; the UI provides visual gradient fallbacks if the external images are unavailable. See [NASA's media guidelines](https://www.nasa.gov/nasa-brand-center/images-and-media/). The site is unofficial and not endorsed by NASA.
 
 ## Credits and usage
 
