@@ -143,6 +143,27 @@ function makeMediaFallback(item) {
 function pictureUrl(item) {
   return safeUrl(item.hdurl);
 }
+
+// The new API no longer provides separate thumbnails. For official NASA
+// dynamicimage assets only, request a smaller rendition for the card. Keep
+// the untouched hdurl for full-size modal images and for other image hosts.
+function thumbnailUrl(item) {
+  const original = pictureUrl(item);
+  if (!original) return "";
+  try {
+    const url = new URL(original);
+    if (url.hostname === "assets.science.nasa.gov" &&
+        url.pathname.startsWith("/dynamicimage/")) {
+      url.searchParams.set("w", "960");
+      url.searchParams.set("h", "720");
+      url.searchParams.set("fit", "clip");
+      return url.href;
+    }
+  } catch {
+    // Non-URL strings have already been rejected by pictureUrl.
+  }
+  return original;
+}
 function featureUrl(item) {
   return safeUrl(item.permalink || item.url) ||
     "https://apod.nasa.gov/apod/astropix.html";
@@ -157,7 +178,7 @@ function formattedDate(value) {
 }
 
 // Show a loading, empty, or error message instead of the gallery.
-function showStatus(title, details, isError = false, isLoading = false) {
+function showStatus(title, details, isError = false, isLoading = false, canRetry = false) {
   gallery.replaceChildren();
   const status = document.createElement("div");
   status.className = "status-message" + (isError ? " error" : "");
@@ -172,6 +193,14 @@ function showStatus(title, details, isError = false, isLoading = false) {
   const paragraph = document.createElement("p");
   paragraph.textContent = details;
   status.append(heading, paragraph);
+  if (canRetry) {
+    const retry = document.createElement("button");
+    retry.type = "button";
+    retry.className = "status-retry";
+    retry.textContent = "Try this search again";
+    retry.addEventListener("click", () => searchForm.requestSubmit());
+    status.append(retry);
+  }
   gallery.append(status);
   // Loading skeletons make the gallery feel responsive while NASA responds.
   if (isLoading) {
@@ -186,7 +215,7 @@ function showStatus(title, details, isError = false, isLoading = false) {
 
 // Create a featured image or a fallback symbol for videos/no image.
 function createMedia(item, fullSize = false) {
-  const source = pictureUrl(item);
+  const source = fullSize ? pictureUrl(item) : thumbnailUrl(item);
   const wrapper = document.createElement("div");
   wrapper.className = fullSize ? "modal-picture" : "image-frame";
 
@@ -195,6 +224,11 @@ function createMedia(item, fullSize = false) {
     image.src = source;
     image.alt = plainText(item.alt) || item.title || "NASA astronomy photograph";
     image.loading = fullSize ? "eager" : "lazy";
+    image.decoding = "async";
+    if (!fullSize) {
+      image.width = 960;
+      image.height = 720;
+    }
     image.addEventListener("error", () => {
       image.remove();
       wrapper.append(makeMediaFallback(item));
@@ -349,7 +383,8 @@ function showGallery(items) {
     resultsLabel.textContent = datesByDay.size + " of 9 entries received";
     showStatus("NASA did not return all 9 days",
       "Missing: " + missingDates.join(", ") +
-      ". Try a nine-day range ending yesterday or choose older dates.", true);
+      ". NASA may not have published every entry or may have temporarily omitted one. " +
+      "Try again, or choose another nine-day window.", true, false, true);
     return;
   }
 
@@ -408,13 +443,23 @@ searchForm.addEventListener("submit", async (event) => {
   resultsLabel.textContent = "Searching the cosmos…";
   showStatus("Loading space photos…", "Connecting to NASA's Astronomy Picture of the Day archive.", false, true);
 
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 20000);
   try {
-    const response = await fetch(API_URL + "?" + params.toString());
+    const response = await fetch(API_URL + "?" + params.toString(), {
+      signal: controller.signal
+    });
     if (!response.ok) {
       if (response.status === 429 || response.status === 403) {
-        throw new Error("NASA's request limit may have been reached. Try your free personal API key in the settings above.");
+        throw new Error("NASA is limiting or blocking requests. Try again later, or use a personal API key in the settings above.");
       }
-      throw new Error("NASA returned an error (" + response.status + "). Please try again.");
+      if (response.status === 404) {
+        throw new Error("No NASA archive records were found for these dates. Please try another nine-day window.");
+      }
+      if (response.status >= 500) {
+        throw new Error("NASA's archive is temporarily unavailable (" + response.status + "). Please try again.");
+      }
+      throw new Error("NASA returned an error (" + response.status + "). Please try another nine-day window.");
     }
     const data = await response.json();
     // Single-day results may arrive as an object rather than an array.
@@ -426,12 +471,17 @@ searchForm.addEventListener("submit", async (event) => {
       throw new Error("NASA returned an unexpected response. Try again shortly.");
     }
   } catch (error) {
-    const message = error instanceof TypeError
-      ? "Could not connect to NASA. Check your internet connection and try again."
-      : error.message;
-    showStatus("We couldn't load the photos", message, true);
+    const message = error && error.name === "AbortError"
+      ? "NASA didn't respond within 20 seconds. Try again in a moment."
+      : error instanceof TypeError
+        ? "Could not connect to NASA. Check your internet connection or try again later."
+        : error && error.message
+          ? error.message
+          : "NASA returned an unexpected error. Please try again.";
+    showStatus("We couldn't load the photos", message, true, false, true);
     resultsLabel.textContent = "Search unsuccessful";
   } finally {
+    clearTimeout(timeout);
     searchButton.disabled = false;
     quickButtons.forEach(button => { button.disabled = false; });
     gallery.setAttribute("aria-busy", "false");
