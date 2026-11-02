@@ -39,7 +39,7 @@
         <div>
           <p class="kicker">YOUR MISSION</p>
           <h2 id="searchTitle">Explore the archive</h2>
-          <p>Set your coordinates in time to discover something incredible.</p>
+          <p>Choose exactly 9 consecutive days of NASA discoveries. Changing either date automatically adjusts the other.</p>
         </div>
         <span class="issue-no">01 / EXPLORE</span>
       </div>
@@ -50,17 +50,17 @@
         <button id="searchButton" class="search-button" type="submit">Get Space Images <span aria-hidden="true">→</span></button>
       </form>
       <div class="quick-ranges" role="group" aria-label="Quick date searches">
-        <span class="quick-label">QUICK JUMPS</span>
-        <button class="quick-button" type="button" data-days="7">Last 7 days</button>
-        <button class="quick-button" type="button" data-days="14">Last 14 days</button>
-        <button class="quick-button" type="button" data-days="30">Last 30 days</button>
+        <span class="quick-label">9-DAY JOURNEYS</span>
+        <button class="quick-button" type="button" data-offset="0">Latest 9 days</button>
+        <button class="quick-button" type="button" data-offset="1">9 days ending yesterday</button>
+        <button class="quick-button" type="button" data-first="true">First 9 days</button>
       </div>
       <details class="api-settings">
-        <summary>NASA API key settings (optional)</summary>
+        <summary>NASA API key settings (DEMO_KEY included)</summary>
         <div class="key-content">
           <label for="apiKey">Your NASA API key</label>
           <input id="apiKey" type="password" placeholder="DEMO_KEY used when empty" autocomplete="off">
-          <p>Not saved or shared in the repository. <a href="https://api.nasa.gov/" target="_blank" rel="noopener noreferrer">Request a free API key ↗</a></p>
+          <p>The valid DEMO_KEY works for testing but has strict request limits. For reliable use, <a href="https://api.nasa.gov/" target="_blank" rel="noopener noreferrer">request your own free NASA key ↗</a>. Your key is not stored or committed.</p>
         </div>
       </details>
     </section>
