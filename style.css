@@ -341,3 +341,128 @@ h1,h2,h3,.brand-name{font-family:"Inter","Public Sans",sans-serif}
 @media (prefers-reduced-motion:reduce){
   .ui-icon,.fallback-svg{transform:none!important;transition:none!important}
 }
+
+
+/* LIGHTER MIDNIGHT-BLUE THEME
+   Brighter deep-blue canvas and glass-like panels without losing cinematic
+   NASA imagery, white-text contrast, responsive layouts, or the new SVG icons. */
+:root{
+  --bg:#101e36;
+  --navy:#172947;
+  --surface:#203758;
+  --surface-2:#294469;
+  --text:#f9fbff;
+  --muted:#d0ddee;
+  --subtle:#aec3df;
+  --accent:#a4d4ff;
+  --blue:#3c88ff;
+  --border:rgba(209,228,255,.28);
+}
+body{
+  background:#101e36;
+  background:linear-gradient(150deg,#182e4f 0%,#11233f 41%,#0e1c35 100%);
+}
+body::before{
+  background:
+    radial-gradient(ellipse 820px 660px at 4% 55%,rgba(77,143,241,.22),transparent 72%),
+    radial-gradient(ellipse 890px 750px at 96% 95%,rgba(92,151,236,.19),transparent 70%),
+    radial-gradient(ellipse 520px 380px at 67% 15%,rgba(59,105,194,.12),transparent 70%);
+}
+.site-header{
+  background:rgba(17,34,58,.9);
+  border-bottom-color:rgba(223,234,255,.15);
+}
+.header-nav .header-link{
+  background:rgba(240,247,255,.11);
+  border-color:rgba(232,243,255,.23);
+}
+.hero{
+  background:#17315a;
+  border-color:rgba(225,238,255,.2);
+}
+.hero::before{
+  background:
+    linear-gradient(90deg,rgba(8,19,41,.93) 0%,rgba(12,26,52,.89) 22%,rgba(12,26,51,.65) 46%,rgba(14,28,52,.09) 86%),
+    linear-gradient(0deg,rgba(9,20,42,.83),transparent 36%),
+    linear-gradient(180deg,rgba(15,31,56,.16),transparent 32%);
+}
+.search-panel{
+  background:linear-gradient(135deg,rgba(35,57,90,.98),rgba(24,42,70,.97));
+  border-color:rgba(208,230,255,.29);
+  box-shadow:0 24px 65px rgba(2,13,33,.27),inset 0 1px rgba(255,255,255,.09);
+}
+.field input,.key-content input{
+  background:#172b4b;
+  border-color:rgba(185,211,249,.38);
+}
+.field input:hover,.key-content input:hover{
+  border-color:rgba(206,226,255,.66);
+}
+.quick-button,.filter-button{
+  background:rgba(226,239,255,.075);
+  border-color:rgba(213,232,255,.29);
+  color:#e0edff;
+}
+.quick-button:hover,.filter-button:hover{
+  background:rgba(128,178,246,.19);
+}
+.api-settings{border-top-color:rgba(231,241,255,.18)}
+.fact-panel{
+  background:
+    radial-gradient(ellipse at 83% 25%,rgba(75,143,240,.24),transparent 56%),
+    linear-gradient(112deg,#243d60,#192d4c);
+  border-color:rgba(202,226,255,.3);
+}
+.fact-icon{
+  background:radial-gradient(circle at 50% 30%,rgba(101,169,255,.22),rgba(59,102,173,.12));
+  border-color:rgba(175,213,255,.31);
+}
+.another-fact{
+  background:rgba(238,247,255,.09);
+  border-color:rgba(193,223,255,.4);
+}
+.another-fact:hover{background:rgba(147,196,255,.2)}
+.gallery-toolbar{border-bottom-color:rgba(228,240,255,.21)}
+.gallery-card{
+  background:linear-gradient(145deg,#2b496d,#192f50);
+  border-color:rgba(202,224,255,.22);
+}
+.gallery-card .image-frame{
+  background:radial-gradient(ellipse at 60% 30%,#385b86,#152c4b 80%);
+}
+.placeholder,.status-message{
+  background:
+    radial-gradient(circle at 50% 24%,rgba(92,158,247,.21),transparent 69%),
+    linear-gradient(145deg,#253e62,#182c4d);
+  border-color:rgba(199,224,255,.36);
+}
+.placeholder-orbit{
+  background:radial-gradient(circle,rgba(93,162,255,.19),transparent 74%);
+  border-color:rgba(167,207,255,.52);
+}
+.loading-skeleton{
+  border-color:rgba(209,230,255,.2);
+  background:linear-gradient(90deg,#1c3455 25%,#395a84 45%,#1c3455 65%);
+  background-size:220% 100%;
+}
+.photo-modal{
+  background:#1a2e4d;
+  border-color:rgba(218,232,255,.33);
+}
+.modal-media{
+  background:radial-gradient(circle at 50% 40%,#38557c,#142743 82%);
+}
+.nav-photo{
+  background:#29476f;
+  border-color:rgba(196,223,255,.33);
+}
+.nav-photo:hover{background:#38649d}
+.close-modal{background:rgba(27,47,76,.95)}
+.nasa-link{
+  background:rgba(75,133,210,.25);
+  border-color:rgba(194,226,255,.32);
+}
+.site-footer{border-top-color:rgba(225,239,255,.18)}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
