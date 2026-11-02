@@ -14,6 +14,13 @@ const resultsLabel = document.getElementById("resultsLabel");
 const modal = document.getElementById("photoModal");
 const modalMedia = document.getElementById("modalMedia");
 const modalLink = document.getElementById("modalLink");
+const galleryToolbar = document.getElementById("galleryToolbar");
+const filterButtons = document.querySelectorAll(".filter-button");
+const quickButtons = document.querySelectorAll(".quick-button");
+let allEntries = [];
+let displayedEntries = [];
+let activeFilter = "all";
+let currentModalIndex = 0;
 
 // Extra credit: choose a random fact whenever the page reloads.
 const spaceFacts = [
@@ -28,8 +35,29 @@ const spaceFacts = [
   "A single day on Mercury lasts about 176 Earth days from sunrise to sunrise.",
   "Sunlight takes over four hours to reach Neptune."
 ];
-const randomIndex = Math.floor(Math.random() * spaceFacts.length);
-document.getElementById("factText").textContent = spaceFacts[randomIndex];
+// Show a different random fact when the visitor requests another one.
+let lastFactIndex = -1;
+function showRandomFact() {
+  let index = Math.floor(Math.random() * spaceFacts.length);
+  if (index === lastFactIndex) index = (index + 1) % spaceFacts.length;
+  lastFactIndex = index;
+  document.getElementById("factText").textContent = spaceFacts[index];
+}
+showRandomFact();
+document.getElementById("anotherFact").addEventListener("click", showRandomFact);
+
+// Quick jumps use the dates already supported by the provided dateRange.js.
+quickButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    const days = Number(button.dataset.days);
+    const end = endInput.max;
+    const start = new Date(end + "T00:00:00Z");
+    start.setUTCDate(start.getUTCDate() - days + 1);
+    startInput.value = start.toISOString().split("T")[0];
+    endInput.value = end;
+    searchForm.requestSubmit();
+  });
+});
 
 // Safely convert NASA's explanation/credit HTML into plain readable text.
 // We never insert API-supplied HTML directly into the visible page.
@@ -123,9 +151,15 @@ function createMedia(item, fullSize = false) {
   return wrapper;
 }
 
-// Display the enlarged picture, title, date, and full NASA explanation.
-// A video instead links to NASA's own page where it can be played.
+// Display an enlarged picture or a video poster with a link to NASA.
 function openDetails(item) {
+  currentModalIndex = displayedEntries.indexOf(item);
+  const position = currentModalIndex + 1;
+  document.getElementById("modalPosition").textContent =
+    "DISCOVERY " + position + " / " + displayedEntries.length;
+  const onlyOne = displayedEntries.length < 2;
+  document.getElementById("previousPhoto").disabled = onlyOne;
+  document.getElementById("nextPhoto").disabled = onlyOne;
   modalMedia.replaceChildren(createMedia(item, true));
   document.getElementById("modalTitle").textContent = plainText(item.title) || "Untitled discovery";
   const dateElement = document.getElementById("modalDate");
@@ -141,22 +175,48 @@ function openDetails(item) {
   modalLink.textContent = item.media_type === "image"
     ? "View original NASA feature ↗"
     : "Watch or view this feature on NASA ↗";
-  modal.showModal();
+  if (!modal.open) modal.showModal();
+  modal.scrollTop = 0;
 }
 
-// Build the cards with DOM elements rather than unsafe HTML strings.
-function showGallery(items) {
+// Browse between the displayed discoveries without closing the dialog.
+function movePhoto(direction) {
+  if (displayedEntries.length < 2) return;
+  currentModalIndex = (currentModalIndex + direction + displayedEntries.length) %
+    displayedEntries.length;
+  openDetails(displayedEntries[currentModalIndex]);
+}
+document.getElementById("previousPhoto").addEventListener("click", () => movePhoto(-1));
+document.getElementById("nextPhoto").addEventListener("click", () => movePhoto(1));
+modal.addEventListener("keydown", event => {
+  if (event.key === "ArrowLeft") { event.preventDefault(); movePhoto(-1); }
+  if (event.key === "ArrowRight") { event.preventDefault(); movePhoto(1); }
+});
+
+// Render the gallery from the current filter: all, photos, or videos.
+function renderGallery() {
+  displayedEntries = allEntries.filter(item => {
+    if (activeFilter === "all") return true;
+    if (activeFilter === "image") return item.media_type === "image";
+    return item.media_type !== "image";
+  });
   gallery.replaceChildren();
-  const sorted = items.filter(item => item && item.date).sort((a, b) =>
-    b.date.localeCompare(a.date)
-  );
-  if (sorted.length === 0) {
-    showStatus("No discoveries found", "Try another date range to explore the archive.");
-    resultsLabel.textContent = "0 results";
+
+  filterButtons.forEach(button => {
+    const selected = button.dataset.filter === activeFilter;
+    button.classList.toggle("is-active", selected);
+    button.setAttribute("aria-pressed", String(selected));
+  });
+  resultsLabel.textContent = displayedEntries.length +
+    (displayedEntries.length === 1 ? " discovery" : " discoveries") +
+    (activeFilter === "all" ? "" : " shown");
+
+  if (displayedEntries.length === 0) {
+    showStatus("Nothing in this category", "Try a different filter or date range.");
     return;
   }
 
-  for (const item of sorted) {
+  for (const item of displayedEntries) {
     const card = document.createElement("button");
     card.type = "button";
     card.className = "gallery-card";
@@ -180,7 +240,37 @@ function showGallery(items) {
     card.addEventListener("click", () => openDetails(item));
     gallery.append(card);
   }
-  resultsLabel.textContent = sorted.length + (sorted.length === 1 ? " discovery" : " discoveries");
+}
+
+// Filter only changes the cards on screen, without making another API request.
+filterButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    activeFilter = button.dataset.filter;
+    renderGallery();
+  });
+});
+
+// Keep the actual API data and update the filter counts.
+function showGallery(items) {
+  allEntries = items.filter(item =>
+    item && typeof item.date === "string" && item.date >= startInput.value &&
+    item.date <= endInput.value
+  ).sort((a, b) => b.date.localeCompare(a.date));
+  activeFilter = "all";
+  galleryToolbar.hidden = allEntries.length === 0;
+  if (allEntries.length === 0) {
+    showStatus("No discoveries found", "Try another date range to explore the archive.");
+    resultsLabel.textContent = "0 results";
+    return;
+  }
+  document.getElementById("allCount").textContent = allEntries.length;
+  document.getElementById("photoCount").textContent =
+    allEntries.filter(item => item.media_type === "image").length;
+  document.getElementById("videoCount").textContent =
+    allEntries.filter(item => item.media_type !== "image").length;
+  document.getElementById("rangeLabel").textContent =
+    formattedDate(startInput.value) + " – " + formattedDate(endInput.value);
+  renderGallery();
 }
 
 // Fetch NASA data using the selected date range whenever the button is clicked.
@@ -206,6 +296,7 @@ searchForm.addEventListener("submit", async (event) => {
     api_key: document.getElementById("apiKey").value.trim() || "DEMO_KEY"
   });
   searchButton.disabled = true;
+  galleryToolbar.hidden = true;
   gallery.setAttribute("aria-busy", "true");
   resultsLabel.textContent = "Searching the cosmos…";
   showStatus("Loading space photos…", "Connecting to NASA's Astronomy Picture of the Day archive.", false, true);
