@@ -135,6 +135,10 @@ function makeMediaFallback(item) {
   fallback.className = "fallback-icon";
   fallback.setAttribute("aria-hidden", "true");
   fallback.append(makeIcon(item.media_type === "video" ? "video" : "image", "ui-icon fallback-svg"));
+  const label = document.createElement("span");
+  label.className = "fallback-caption";
+  label.textContent = item.media_type === "video" ? "Video — open NASA details" : "Image preview unavailable";
+  fallback.append(label);
   return fallback;
 }
 
