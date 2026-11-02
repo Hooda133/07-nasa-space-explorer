@@ -390,10 +390,15 @@ searchForm.addEventListener("submit", async (event) => {
     return;
   }
 
+  // The direct NASA WordPress endpoint is different from the legacy APOD
+  // API gateway: it expects date_from/date_to as YYMMDD, not start_date/end_date.
+  // NASA's open-source gateway converts YYYY-MM-DD into these exact parameters.
+  function toWordPressDate(isoDate) {
+    return isoDate.replaceAll("-", "").slice(2);
+  }
   const params = new URLSearchParams({
-    // NASA's current APOD endpoint documents YYYY-MM-DD start_date/end_date.
-    start_date: startDate,
-    end_date: endDate,
+    date_from: toWordPressDate(startDate),
+    date_to: toWordPressDate(endDate),
     api_key: document.getElementById("apiKey").value.trim() || "DEMO_KEY"
   });
   searchButton.disabled = true;
