@@ -151,6 +151,15 @@ function showStatus(title, details, isError = false, isLoading = false) {
   paragraph.textContent = details;
   status.append(heading, paragraph);
   gallery.append(status);
+  // Loading skeletons make the gallery feel responsive while NASA responds.
+  if (isLoading) {
+    for (let i = 0; i < 3; i++) {
+      const skeleton = document.createElement("div");
+      skeleton.className = "loading-skeleton";
+      skeleton.setAttribute("aria-hidden", "true");
+      gallery.append(skeleton);
+    }
+  }
 }
 
 // Create a featured image or a fallback symbol for videos/no image.
@@ -255,12 +264,20 @@ function renderGallery() {
     return;
   }
 
-  for (const item of displayedEntries) {
+  for (const [index, item] of displayedEntries.entries()) {
     const card = document.createElement("button");
     card.type = "button";
     card.className = "gallery-card";
     card.setAttribute("aria-label", "View details: " + plainText(item.title || "NASA feature"));
     card.append(createMedia(item));
+
+    // Editorial image-number overlay, e.g., 01 / 09.
+    const number = document.createElement("span");
+    number.className = "card-index";
+    number.setAttribute("aria-hidden", "true");
+    number.textContent = String(index + 1).padStart(2, "0") +
+      " / " + String(displayedEntries.length).padStart(2, "0");
+    card.append(number);
 
     const body = document.createElement("div");
     body.className = "card-body";
@@ -354,9 +371,9 @@ searchForm.addEventListener("submit", async (event) => {
   }
 
   const params = new URLSearchParams({
-    // WordPress APOD uses YYMMDD date_from/date_to instead of the legacy keys.
-    date_from: startDate.replaceAll("-", "").slice(2),
-    date_to: endDate.replaceAll("-", "").slice(2),
+    // NASA's current APOD endpoint documents YYYY-MM-DD start_date/end_date.
+    start_date: startDate,
+    end_date: endDate,
     api_key: document.getElementById("apiKey").value.trim() || "DEMO_KEY"
   });
   searchButton.disabled = true;
