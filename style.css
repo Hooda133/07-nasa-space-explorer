@@ -71,7 +71,7 @@ h1,h2,h3,.brand-name{font-family:"Inter","Public Sans",sans-serif}
 @keyframes fade-up{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
 
 /* Floating mission controls */
-.search-panel{position:relative;z-index:3;margin:-34px clamp(10px,3.5vw,45px) 0;padding:clamp(25px,3vw,38px);background:linear-gradient(140deg,rgba(19,31,55,.98),rgba(11,23,44,.97));border:1px solid rgba(177,207,255,.21);box-shadow:0 28px 60px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.05);border-radius:21px}
+.search-panel{position:relative;z-index:3;margin:24px clamp(10px,3.5vw,45px) 0;padding:clamp(25px,3vw,38px);background:linear-gradient(140deg,rgba(19,31,55,.98),rgba(11,23,44,.97));border:1px solid rgba(177,207,255,.21);box-shadow:0 28px 60px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.05);border-radius:21px}
 .section-heading,.gallery-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:22px}
 .section-heading .kicker,.gallery-heading .kicker{margin-bottom:7px;color:#85bcfa}
 .section-heading h2{font-size:clamp(25px,3vw,35px);font-weight:750;line-height:1.22;letter-spacing:-.055em;margin:0}
@@ -219,7 +219,7 @@ h1,h2,h3,.brand-name{font-family:"Inter","Public Sans",sans-serif}
   .hero-content{padding:35px}
   .hero h1{font-size:clamp(58px,10vw,77px)}
   .hero-credit{display:none}
-  .search-panel{margin:-25px 13px 0}
+  .search-panel{margin:20px 13px 0}
   .fact-panel{margin:45px 10px 73px}
   .gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
   .gallery-card,.gallery-card:nth-child(2){height:345px}
@@ -254,7 +254,7 @@ h1,h2,h3,.brand-name{font-family:"Inter","Public Sans",sans-serif}
   .hero-metrics strong{font-size:24px}
   .hero-metrics span{font-size:8px}
   .hero-metrics .metric-divider{height:27px}
-  .search-panel{margin:-18px 8px 0;padding:23px 19px;border-radius:15px}
+  .search-panel{margin:16px 8px 0;padding:23px 19px;border-radius:15px}
   .section-heading{align-items:flex-start}
   .section-heading h2{font-size:26px}
   .issue-no{display:none}
