@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#07152e">
+  <meta name="theme-color" content="#030711">
   <meta name="description" content="Explore NASA's Astronomy Picture of the Day archive.">
   <title>Space Explorer | NASA APOD</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,25 +15,47 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="header-inner">
-      <img class="nasa-logo" src="img/nasa-worm-logo.png" alt="NASA logo">
-      <span class="header-divider" aria-hidden="true"></span>
-      <span class="brand-name">SPACE EXPLORER</span>
-      <a class="header-link" href="https://science.nasa.gov/" target="_blank" rel="noopener noreferrer">EXPLORE NASA ↗</a>
+      <a class="brand-lockup" href="#main" aria-label="Space Explorer — back to top">
+        <img class="nasa-logo" src="img/nasa-worm-logo.png" alt="NASA">
+        <span class="header-divider" aria-hidden="true"></span>
+        <span class="brand-name">SPACE<span>EXPLORER</span><small>THE APOD EXPERIENCE</small></span>
+      </a>
+      <nav class="header-nav" aria-label="Main navigation">
+        <a href="#searchTitle">Explore</a>
+        <a href="#galleryTitle">Discoveries</a>
+        <a class="header-link" href="https://science.nasa.gov/" target="_blank" rel="noopener noreferrer">NASA Science <span aria-hidden="true">↗</span></a>
+      </nav>
     </div>
   </header>
 
   <main class="container" id="main">
     <section class="hero" aria-labelledby="heroTitle">
-      <div class="hero-copy">
-        <p class="eyebrow"><span class="signal" aria-hidden="true"></span> NASA / ASTRONOMY PICTURE OF THE DAY</p>
-        <h1 id="heroTitle">The universe,<br><span>one day at a time.</span></h1>
-        <p class="hero-description">An entire cosmos of discovery is waiting. Choose your dates to explore the incredible images NASA has shared with the world.</p>
-        <div class="hero-meta"><span>✦ Exploring since 1995</span><span>✦ Real NASA imagery</span></div>
+      <div class="hero-visual" aria-hidden="true">
+        <img class="hero-image"
+             src="https://science.nasa.gov/wp-content/uploads/2023/09/web-first-images-release.png"
+             alt="" fetchpriority="high" decoding="async">
       </div>
-      <div class="space-art" aria-hidden="true">
-        <div class="orbit orbit-wide"></div><div class="orbit orbit-small"></div>
-        <div class="planet"></div><div class="moon"></div>
-        <span class="star star-one">✦</span><span class="star star-two">✦</span>
+      <div class="hero-noise" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="signal" aria-hidden="true"></span> YOUR WINDOW TO THE COSMOS <span class="eyebrow-suffix">/ NASA APOD ARCHIVE</span></p>
+          <h1 id="heroTitle">Beyond<br>what we <em>know.</em></h1>
+          <p class="hero-description">Nine days. Infinite wonder. Explore extraordinary moments captured across our universe, straight from NASA’s Astronomy Picture of the Day archive.</p>
+          <div class="hero-actions">
+            <a class="hero-primary" href="#searchTitle">Start exploring <span aria-hidden="true">↗</span></a>
+            <a class="hero-secondary" href="#galleryTitle">View discoveries <span aria-hidden="true">↓</span></a>
+          </div>
+        </div>
+        <div class="hero-bottom">
+          <div class="hero-metrics">
+            <div><strong>09</strong><span>DAY JOURNEY</span></div>
+            <span class="metric-divider" aria-hidden="true"></span>
+            <div><strong>1995</strong><span>ARCHIVE BEGINS</span></div>
+            <span class="metric-divider" aria-hidden="true"></span>
+            <div><strong>∞</strong><span>REASONS TO WONDER</span></div>
+          </div>
+          <p class="hero-credit">CARINA NEBULA · WEBB SPACE TELESCOPE<br>IMAGE: NASA / ESA / CSA / STSCI</p>
+        </div>
       </div>
     </section>
 
@@ -42,15 +64,16 @@
         <div>
           <p class="kicker">YOUR MISSION</p>
           <h2 id="searchTitle">Explore the archive</h2>
-          <p>Choose exactly 9 consecutive days of NASA discoveries. Changing either date automatically adjusts the other.</p>
+          <p>Pick your launch window. We'll bring back nine days of discoveries from the NASA archive.</p>
         </div>
-        <span class="issue-no">01 / EXPLORE</span>
+        <span class="issue-no"><span class="issue-dot" aria-hidden="true"></span> MISSION CONTROL / 01</span>
       </div>
 
       <form class="filters" id="searchForm">
-        <div class="field"><label for="startDate">Start date</label><input id="startDate" type="date" required></div>
-        <div class="field"><label for="endDate">End date</label><input id="endDate" type="date" required></div>
-        <button id="searchButton" class="search-button" type="submit">Get Space Images <span aria-hidden="true">→</span></button>
+        <div class="field"><label for="startDate"><span class="field-step">01</span> START DATE</label><input id="startDate" type="date" required></div>
+        <div class="range-connector" aria-hidden="true"><span>→</span></div>
+        <div class="field"><label for="endDate"><span class="field-step">02</span> END DATE</label><input id="endDate" type="date" required></div>
+        <button id="searchButton" class="search-button" type="submit"><span>Launch discovery</span><span class="button-arrow" aria-hidden="true">↗</span></button>
       </form>
       <div class="quick-ranges" role="group" aria-label="Quick date searches">
         <span class="quick-label">9-DAY JOURNEYS</span>
@@ -69,14 +92,14 @@
     </section>
 
     <aside class="fact-panel" aria-labelledby="factTitle">
-      <div class="fact-icon" aria-hidden="true">✦</div>
+      <div class="fact-icon" aria-hidden="true"><span>✧</span><small>SPACE FACT / 001</small></div>
       <div class="fact-copy"><p class="kicker">A LITTLE COSMIC KNOWLEDGE</p><h2 id="factTitle">Did you know?</h2><p id="factText">Discover a new space fact every visit.</p></div>
       <button id="anotherFact" class="another-fact" type="button" aria-label="Show another space fact">Another fact ↻</button>
     </aside>
 
     <section class="discoveries" aria-labelledby="galleryTitle">
       <div class="gallery-heading">
-        <div><p class="kicker">THE COSMIC COLLECTION</p><h2 id="galleryTitle">Your discoveries</h2></div>
+        <div><p class="kicker">EXPLORATION LOG / YOUR NINE-DAY JOURNEY</p><h2 id="galleryTitle">The universe, <span class="heading-accent">unfiltered.</span></h2><p class="gallery-intro">Every frame has a story. Click any discovery to dive deeper.</p></div>
         <p class="results-count" id="resultsLabel" aria-live="polite">Awaiting your first discovery</p>
       </div>
       <div class="gallery-toolbar" id="galleryToolbar" hidden>
@@ -88,9 +111,12 @@
         <span id="rangeLabel" class="range-label"></span>
       </div>
       <div id="gallery" class="gallery" aria-live="polite" aria-busy="false">
-        <div class="placeholder"><span class="placeholder-icon" aria-hidden="true">✺</span>
-          <h3>There's a whole universe out there.</h3>
-          <p>Select a date range and click "Get Space Images" to start exploring.</p>
+        <div class="placeholder">
+          <div class="placeholder-orbit" aria-hidden="true"><span>✦</span></div>
+          <p class="kicker">YOUR JOURNEY STARTS HERE</p>
+          <h3>The cosmos is calling.</h3>
+          <p>Choose a nine-day window and launch your exploration of the universe.</p>
+          <a href="#searchTitle" class="placeholder-link">Set your dates <span aria-hidden="true">↑</span></a>
         </div>
       </div>
     </section>
