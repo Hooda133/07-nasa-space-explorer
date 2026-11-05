@@ -366,18 +366,18 @@ filterButtons.forEach(button => {
 
 // Keep nine distinct APOD entries, one for every selected date.
 // Some API responses include duplicate entries or may omit an unpublished day.
-function showGallery(items) {
+function showGallery(items, rangeStart, rangeEnd) {
   const datesByDay = new Map();
   for (const item of items) {
     if (item && typeof item.date === "string" &&
-        item.date >= startInput.value && item.date <= endInput.value &&
+        item.date >= rangeStart && item.date <= rangeEnd &&
         !datesByDay.has(item.date)) {
       datesByDay.set(item.date, item);
     }
   }
   const expectedDates = [];
   for (let day = 0; day < REQUIRED_DAYS; day++) {
-    expectedDates.push(moveDate(startInput.value, day));
+    expectedDates.push(moveDate(rangeStart, day));
   }
   const missingDates = expectedDates.filter(date => !datesByDay.has(date));
   if (missingDates.length > 0) {
@@ -402,15 +402,22 @@ function showGallery(items) {
   document.getElementById("videoCount").textContent =
     allEntries.filter(item => item.media_type !== "image").length;
   document.getElementById("rangeLabel").textContent =
-    formattedDate(startInput.value) + " – " + formattedDate(endInput.value);
+    formattedDate(rangeStart) + " – " + formattedDate(rangeEnd);
   renderGallery();
 }
 
 // Fetch NASA data using the selected date range whenever the button is clicked.
 searchForm.addEventListener("submit", async (event) => {
   event.preventDefault();
+  // Ignore double submissions while NASA is processing a date window.
+  if (searchButton.disabled) return;
   const startDate = startInput.value;
   const endDate = endInput.value;
+
+  // Never leave controls for a prior gallery visible after a new submission.
+  galleryToolbar.hidden = true;
+  allEntries = [];
+  displayedEntries = [];
 
   // YYYY-MM-DD strings are safe to compare in chronological order.
   if (!startDate || !endDate || startDate > endDate) {
@@ -441,6 +448,8 @@ searchForm.addEventListener("submit", async (event) => {
     api_key: document.getElementById("apiKey").value.trim() || "DEMO_KEY"
   });
   searchButton.disabled = true;
+  startInput.disabled = true;
+  endInput.disabled = true;
   quickButtons.forEach(button => { button.disabled = true; });
   galleryToolbar.hidden = true;
   gallery.setAttribute("aria-busy", "true");
@@ -468,9 +477,9 @@ searchForm.addEventListener("submit", async (event) => {
     const data = await response.json();
     // Single-day results may arrive as an object rather than an array.
     if (Array.isArray(data)) {
-      showGallery(data);
+      showGallery(data, startDate, endDate);
     } else if (data && data.date) {
-      showGallery([data]);
+      showGallery([data], startDate, endDate);
     } else {
       throw new Error("NASA returned an unexpected response. Try again shortly.");
     }
@@ -487,6 +496,8 @@ searchForm.addEventListener("submit", async (event) => {
   } finally {
     clearTimeout(timeout);
     searchButton.disabled = false;
+    startInput.disabled = false;
+    endInput.disabled = false;
     quickButtons.forEach(button => { button.disabled = false; });
     gallery.setAttribute("aria-busy", "false");
   }
