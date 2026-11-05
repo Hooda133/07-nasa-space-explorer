@@ -31,7 +31,7 @@ An interactive, responsive gallery for NASA's Astronomy Picture of the Day (APOD
 
 1. Open this repository in **VS Code**.
 2. Open `index.html` with a local preview extension such as Live Server or Live Preview.
-3. Select a date range and click **Get Space Images**.
+3. Select a date range and click **Launch discovery**.
 4. Click any card to open its details. Close the modal using **×**, **Escape**, or the background.
 5. Try the date shortcuts and the photo/video filters. In the modal, use the arrow buttons or the keyboard's left/right arrow keys to browse.
 6. Refresh for a different space fact, or click **Another fact**.
@@ -48,9 +48,20 @@ An interactive, responsive gallery for NASA's Astronomy Picture of the Day (APOD
 - Temporarily block the NASA endpoint in browser developer tools and confirm the retry button and error notice appear; test a narrow phone viewport and reduced-motion mode.
 - Try the mobile layout and keyboard controls.
 
-The HTML/CSS and client-side behavior have been tested with mocked NASA responses and static checks. **Real NASA responses and the live website appearance must still be checked in Codespaces before submission.** An API record with no image uses a labeled illustration fallback and a link to the NASA article rather than inventing a photo.
+The HTML/CSS and client-side behavior have been tested with mocked NASA responses and static checks. A final 39-check simulated audit verified archive date requests, exactly nine cards, image/video modals, fallback/error cases, retry handling, and overlapping-request prevention. Search dates are now locked while NASA responds and each response is validated against the original submitted window. **Real NASA responses and the live website appearance must still be checked in Codespaces before submission.** An API record with no image uses a labeled illustration fallback and a link to the NASA article rather than inventing a photo.
 
 The default date range is populated by the provided `js/dateRange.js` file, which remains unchanged. All custom JavaScript is in `js/script.js`. Additional code keeps the start and end dates exactly eight days apart and validates that one unique NASA result exists for each of the nine days. If NASA has not yet published one of the entries, the app names the missing date instead of inventing a result.
+
+## Final submission verification (in Codespaces)
+
+These are essential manual browser checks — the simulated tests cannot replace live API verification:
+
+1. Run the site on its normal forwarded port (e.g. `python3 -m http.server 3000 --bind 0.0.0.0`) and open **port 3000 in a new browser tab** if the embedded Live Preview prompts for GitHub sign-in.
+2. Try an older nine-day range such as **January 1–9, 2000** and a more recent *fully published* nine-day range. Expect nine real APOD records, not nine placeholder photos.
+3. Click a photo, confirm the full-resolution image and explanation open, navigate next/previous and close the dialog.
+4. Confirm video entries show their NASA article link, the Did You Know fact changes, and the hover effect does not prevent keyboard/touch use.
+5. At mobile width check that the hero, 3D decorations, dates, search panel and lightbox do not overlap. If NASA is unavailable, verify the error/retry notice instead of submitting a broken page.
+6. Leave `js/dateRange.js` unchanged and **do not commit a personal API key**. `DEMO_KEY` is acceptable for light testing but is subject to usage limits.
 
 ## NASA API
 
